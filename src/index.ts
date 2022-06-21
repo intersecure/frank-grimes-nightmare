@@ -225,8 +225,6 @@ function validateMessage(message: Discord.Message): MessageCommands {
       command = 'help';
     } else if (split[1] === 'invite') {
       command = 'invite';
-    } else if (split[1] === 'debug') {
-      command = 'debug';
     } else if (split[1] === 'tts') {
       command = 'tts';
     }
