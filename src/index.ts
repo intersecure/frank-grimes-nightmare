@@ -225,8 +225,6 @@ function validateMessage(message: Discord.Message): MessageCommands {
       command = 'help';
     } else if (split[1] === 'invite') {
       command = 'invite';
-    } else if (split[1] === 'tts') {
-      command = 'tts';
     }
   }
   return command;
@@ -642,14 +640,6 @@ function helpMessage(): AgnosticReplyOptions {
       `${config.messageCommandPrefix} invite or /${inviteCommand.name}`,
       `Post this bot's invite URL.`
     )
-    .addField(
-      `${config.messageCommandPrefix} debug or /${messageCommand.name} debug: True`,
-      `Runs the ${config.messageCommandPrefix} command and follows it up with debug info.`
-    )
-    .addField(
-      `${config.messageCommandPrefix} tts or /${messageCommand.name} tts: True`,
-      `Runs the ${config.messageCommandPrefix} command and reads it with text-to-speech.`
-    )
     .setFooter({
       text: `${packageJson().name} ${getVersion()} by ${
         (packageJson().author as PackageJsonPerson).name
@@ -666,7 +656,7 @@ function generateInviteUrl(): string {
     permissions: [
       'VIEW_CHANNEL',
       'SEND_MESSAGES',
-      'SEND_TTS_MESSAGES',
+//      'SEND_TTS_MESSAGES',
       'ATTACH_FILES',
       'READ_MESSAGE_HISTORY',
     ],
@@ -757,16 +747,16 @@ client.on('messageCreate', async (message) => {
     const generatedResponse = await generateResponse(message);
     await handleResponseMessage(generatedResponse, message);
   }
-  if (command === 'tts') {
-    L.debug('Responding to legacy command tts');
-    const generatedResponse = await generateResponse(message, { tts: true });
-    await handleResponseMessage(generatedResponse, message);
-  }
-  if (command === 'debug') {
-    L.debug('Responding to legacy command debug');
-    const generatedResponse = await generateResponse(message, { debug: true });
-    await handleResponseMessage(generatedResponse, message);
-  }
+  // if (command === 'tts') {
+  //   L.debug('Responding to legacy command tts');
+  //   const generatedResponse = await generateResponse(message, { tts: true });
+  //   await handleResponseMessage(generatedResponse, message);
+  // }
+  // if (command === 'debug') {
+  //   L.debug('Responding to legacy command debug');
+  //   const generatedResponse = await generateResponse(message, { debug: true });
+  //   await handleResponseMessage(generatedResponse, message);
+  // }
   if (command === null) {
     if (isHumanAuthoredMessage(message)) {
       if (client.user && message.mentions.has(client.user)) {
